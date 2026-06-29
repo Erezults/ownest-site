@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Confirmed — Ownest</title>
+  <meta name="description" content="Your Ownest email address is verified. Open the Ownest app to continue.">
+  <link rel="icon" type="image/png" href="images/app-icon.png">
+  <link rel="apple-touch-icon" href="images/app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Brand tokens — kept in sync with web/index.html :root ─────────────── */
+    :root {
+      --bg-deep: #0a0e1a;
+      --bg-dark: #0f1729;
+      --bg-card: #151d2e;
+      --bg-glass: rgba(255,255,255,0.04);
+      --border-glass: rgba(255,255,255,0.08);
+      --blue: #3b82f6;
+      --blue-bright: #60a5fa;
+      --blue-glow: rgba(59,130,246,0.2);
+      --navy: #1e3a5f;
+      --green: #22c55e;
+      --green-glow: rgba(34,197,94,0.18);
+      --text: #f0f4ff;
+      --text-secondary: rgba(240,244,255,0.55);
+      --text-muted: rgba(240,244,255,0.3);
+      --font-display: 'Rubik', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body); background: var(--bg-deep); color: var(--text);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 24px; -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+
+    /* Soft radial glow background — same palette/treatment as index.html hero */
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(59,130,246,0.1), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(34,197,94,0.07), transparent),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(30,58,95,0.15), transparent);
+    }
+
+    .card {
+      position: relative; z-index: 1; text-align: center; max-width: 440px; width: 100%;
+      background: var(--bg-card); border: 1px solid var(--border-glass);
+      border-radius: 24px; padding: 48px 32px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    }
+
+    /* App icon badge — mirrors index.html .app-badge .icon styling */
+    .logo {
+      width: 64px; height: 64px; border-radius: 16px; overflow: hidden;
+      background: var(--navy); margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Green success check in a glowing ring */
+    .check {
+      width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 24px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--green-glow); border: 1px solid rgba(34,197,94,0.35);
+      box-shadow: 0 0 32px var(--green-glow);
+    }
+    .check svg { width: 36px; height: 36px; stroke: var(--green); }
+
+    h1 {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 26px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 6px;
+    }
+    .he {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 18px; color: var(--text-secondary); margin-bottom: 18px;
+      direction: rtl; /* Hebrew line renders right-to-left */
+    }
+    .body {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.6;
+      margin-bottom: 28px; max-width: 320px; margin-inline: auto;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--blue); color: #fff; font-family: var(--font-display);
+      font-weight: 700; font-size: 16px; padding: 14px 28px; border-radius: 14px;
+      text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+      box-shadow: 0 0 32px var(--blue-glow);
+    }
+    .btn-primary:hover { background: var(--blue-bright); transform: translateY(-1px); }
+
+    .hint { margin-top: 20px; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .hint a { color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <main class="card">
+    <!-- App icon (falls back to hidden if the asset is missing) -->
+    <div class="logo">
+      <img src="images/app-icon.png" alt="Ownest icon" onerror="this.parentNode.style.display='none'">
+    </div>
+
+    <!-- Green success check -->
+    <div class="check" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+    </div>
+
+    <h1>Email confirmed &#10003;</h1>
+    <p class="he">&#1492;&#1488;&#1497;&#1502;&#1497;&#1497;&#1500; &#1488;&#1493;&#1502;&#1514; &#10003;</p>
+
+    <p class="body">
+      Your email is verified. Open the Ownest app to continue.<br>
+      <span style="color:var(--text-muted);">&#1492;&#1492;&#1514;&#1495;&#1489;&#1512;&#1493;&#1514; &#1488;&#1493;&#1502;&#1514;&#1492;. &#1508;&#1514;&#1495;&#1493; &#1488;&#1514; &#1488;&#1508;&#1500;&#1497;&#1511;&#1510;&#1497;&#1497;&#1514; Ownest &#1499;&#1491;&#1497; &#1500;&#1492;&#1502;&#1513;&#1497;&#1498;.</span>
+    </p>
+
+    <!-- Same deep link is wired in JS below (onclick) and as a real href fallback -->
+    <a id="openAppBtn" class="btn-primary" href="ownest://auth-callback">Open Ownest app</a>
+
+    <p class="hint">
+      If the app didn't open, make sure Ownest is installed on this device, then tap the button above.
+    </p>
+  </main>
+
+  <script>
+    // ============================================================
+    // auth-callback.html — Supabase email-confirmation landing page.
+    //
+    // This is a STATIC page (no build, no dependencies). It must always
+    // load and never 404 — that is the whole point of hosting it.
+    //
+    // FLOW
+    //   1. The user taps the "Confirm your email" link in the Supabase
+    //      confirmation email.
+    //   2. Supabase redirects here, appending the session material as
+    //      EITHER:
+    //         • PKCE flow     → ?code=<auth_code>            (query string)
+    //         • implicit flow → #access_token=…&refresh_token=…  (hash)
+    //   3. We immediately try to hand those params off to the native app
+    //      via the `ownest://auth-callback` deep link, preserving the
+    //      original query/hash. The app's AuthContext deep-link handler
+    //      reads `?code=` (exchangeCodeForSession) or
+    //      `#access_token/#refresh_token` (setSession) to complete sign-in.
+    //   4. If no app is installed (or this is a desktop browser), nothing
+    //      happens and the page simply stays on the "confirmed" message —
+    //      graceful, no error, no 404.
+    //
+    // We target the PROD scheme `ownest://` only. The dev build uses
+    // `ownest-dev://` but signs up with its own deep link directly, so it
+    // never routes through this web page.
+    // ============================================================
+    (function () {
+      'use strict';
+
+      // The native deep-link base the app listens on (see app.config.js `scheme`
+      // = 'ownest' and AuthContext: url.includes('auth-callback')).
+      var DEEP_LINK_BASE = 'ownest://auth-callback';
+
+      // Preserve whatever Supabase appended. We forward BOTH forms verbatim:
+      //   • location.search → "?code=…"      (PKCE)
+      //   • location.hash   → "#access_token=…&refresh_token=…" (implicit)
+      // Either (or neither, on a plain visit) may be present.
+      var search = window.location.search || '';   // includes leading "?" if any
+      var hash = window.location.hash || '';        // includes leading "#" if any
+
+      // Build the deep link with the original params attached, in order.
+      var deepLink = DEEP_LINK_BASE + search + hash;
+
+      // Wire the visible button to the exact same deep link (covers the case
+      // where the auto-open below is blocked or there were no params to forward).
+      var btn = document.getElementById('openAppBtn');
+      if (btn) { btn.setAttribute('href', deepLink); }
+
+      // Auto-attempt to open the app on load. Setting window.location to a custom
+      // scheme triggers the OS to hand off to the app if it's installed; if not,
+      // it's a no-op (older browsers may show a "cannot open page" prompt — that's
+      // the only edge case, and the page remains usable underneath).
+      function openApp() {
+        try {
+          window.location.href = deepLink;
+        } catch (e) {
+          // Ignore — the user can still tap the button, and the page stays put.
+        }
+      }
+
+      // Small delay lets the "Email confirmed" UI paint first, so even a fast
+      // hand-off leaves the user with a clear confirmation when they return.
+      window.setTimeout(openApp, 400);
+    })();
+  </script>
+</body>
+</html>
