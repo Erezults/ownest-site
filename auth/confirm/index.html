@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ownest — אימות אימייל / Email verified</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0c0e1a" />
+  
+  
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --brand-green: #3B82F6;
+      --brand-pink: #1E3A5F;
+      --ink: #0c0e1a;
+      --border-dark: rgba(255,255,255,0.14);
+      --text-on-dark: #f4f5fb;
+      --text-on-dark-muted: rgba(244,245,251,0.72);
+    }
+  </style>
+
+  <style>
+    body { min-height: 100dvh; display: grid; place-items: center;
+      background: radial-gradient(120% 120% at 80% -10%, #1b1f4a 0%, var(--ink) 60%); color: var(--text-on-dark); }
+    .auth-card { max-width: 480px; margin-inline: auto; text-align: center; padding: 40px 26px 48px; }
+    .auth-card .mark { height: 52px; width: auto; margin: 0 auto 30px; filter: drop-shadow(0 8px 30px rgba(0,0,0,.4)); }
+    .badge-ic { width: 88px; height: 88px; border-radius: 50%; margin: 0 auto 24px; display: grid; place-items: center;
+      background: rgba(61,220,132,.16); }
+    .badge-ic.err { background: rgba(255,61,119,.16); }
+    .badge-ic.key { background: rgba(124,92,255,.18); }
+    .badge-ic svg { width: 48px; height: 48px; color: var(--brand-green); }
+    .badge-ic.err svg { color: var(--brand-pink); }
+    .badge-ic.key svg { color: #a78bfa; }
+    .auth-card h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); margin-bottom: 12px; color: #fff; }
+    .auth-card p { color: var(--text-on-dark-muted); font-size: 1.08rem; margin-bottom: 30px; }
+    .auth-actions { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .auth-actions .btn { min-width: 240px; }
+    .appstore-badge svg, .appstore-badge img { height: 50px; }
+    .lang-switch { position: fixed; top: 16px; inset-inline-end: 16px; }
+    .lang-switch button { background: rgba(255,255,255,.1); border: 1px solid var(--border-dark); color: #fff;
+      border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: .85rem; }
+    .hint { font-size: .9rem; color: var(--text-on-dark-muted); margin-top: 8px; }
+    /* Recovery (set-new-password) form */
+    .pw-form { display: flex; flex-direction: column; gap: 14px; max-width: 340px; margin: 0 auto; }
+    .pw-form input { width: 100%; padding: 14px 16px; font-size: 1.05rem; border-radius: 14px;
+      border: 1px solid var(--border-dark); background: rgba(255,255,255,.06); color: #fff; outline: none;
+      font-family: inherit; }
+    .pw-form input:focus { border-color: #a78bfa; background: rgba(255,255,255,.1); }
+    .pw-form input::placeholder { color: rgba(255,255,255,.45); }
+    .pw-err { color: var(--brand-pink); font-size: .92rem; min-height: 1.1em; margin: 0; }
+    .btn[disabled] { opacity: .6; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div class="lang-switch"><button id="langBtn" type="button">English</button></div>
+  <main class="auth-card">
+    <img class="mark" src="/assets/img/groupy-wordmark.png" alt="Ownest" />
+
+    <!-- ✅ Email verified (signup / email-change / classic verify redirect) -->
+    <div id="state-ok" style="display:none">
+      <div class="badge-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h1 data-i18n="ok_title">האימייל שלך אומת! 🎉</h1>
+      <p data-i18n="ok_sub">החשבון שלך מוכן. חזרו לאפליקציית Ownest והתחברו עם האימייל והסיסמה שלכם.</p>
+      <div class="auth-actions">
+        <a class="btn btn-primary openApp" href="groupy://" data-i18n="open_app">פתחו את Ownest</a>
+        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
+          <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
+        </a>
+        <p class="hint" data-i18n="hint">לא נפתח? ודאו ש-Ownest מותקנת, ופתחו אותה ידנית.</p>
+      </div>
+    </div>
+
+    <!-- 🔑 Recovery: choose a new password right here (works even without the app) -->
+    <div id="state-recovery" style="display:none">
+      <div class="badge-ic key"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 2l-2 2m-7.6 7.6a5 5 0 1 0-1.4 1.4l2.4 2.4-1.5 1.5 2 2 1.5-1.5 2.1 2.1 2-2-2.1-2.1 2.5-2.5-2-2-2.5 2.5z"/><circle cx="7.5" cy="15.5" r="1.5" fill="currentColor" stroke="none"/></svg></div>
+      <h1 data-i18n="rc_title">בחרו סיסמה חדשה</h1>
+      <p data-i18n="rc_sub">הזינו סיסמה חדשה לחשבון Ownest שלכם.</p>
+      <form class="pw-form" id="pwForm" autocomplete="on">
+        <input id="pw" type="password" autocomplete="new-password" data-ph="pw_ph" placeholder="סיסמה חדשה" />
+        <input id="pw2" type="password" autocomplete="new-password" data-ph="pw2_ph" placeholder="אימות סיסמה" />
+        <p class="pw-err" id="pwErr"></p>
+        <button class="btn btn-primary" id="pwSubmit" type="submit" data-i18n="rc_submit">עדכון סיסמה</button>
+      </form>
+    </div>
+
+    <!-- ✅ Password updated -->
+    <div id="state-recovery-done" style="display:none">
+      <div class="badge-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h1 data-i18n="rd_title">הסיסמה עודכנה! 🎉</h1>
+      <p data-i18n="rd_sub">פתחו את Ownest והתחברו עם הסיסמה החדשה.</p>
+      <div class="auth-actions">
+        <a class="btn btn-primary openApp" href="groupy://" data-i18n="open_app">פתחו את Ownest</a>
+        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
+          <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
+        </a>
+      </div>
+    </div>
+
+    <!-- ⚠️ Link expired / invalid -->
+    <div id="state-err" style="display:none">
+      <div class="badge-ic err"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+      <h1 data-i18n="err_title">הקישור פג או אינו תקין</h1>
+      <p data-i18n="err_sub">קישור האימות פג תוקף או כבר נוצל. פתחו את Ownest ובקשו אימייל חדש.</p>
+      <div class="auth-actions">
+        <a class="btn btn-primary openApp" href="groupy://" data-i18n="open_app2">פתחו את Ownest</a>
+        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
+          <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    document.documentElement.classList.remove('no-js');
+
+    // ── Supabase (PUBLIC values — already shipped in the app bundle) ──
+    var SUPABASE_URL = 'https://jfclvtjovdbmxgooblhc.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpmY2x2dGpvdmRibXhnb29ibGhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwNTE2NzIsImV4cCI6MjA5NzYyNzY3Mn0.Fs0gA8Zx9O5yWW9tOh9mwwd5fCx5InRMlQ9DsiN3lq8';
+    var AUTH_BASE = SUPABASE_URL + '/auth/v1';
+    var MIN_PW = 6;
+
+    var STR = {
+      he: {
+        ok_title: 'האימייל שלך אומת! 🎉',
+        ok_sub: 'החשבון שלך מוכן. חזרו לאפליקציית Ownest והתחברו עם האימייל והסיסמה שלכם.',
+        rc_title: 'בחרו סיסמה חדשה', rc_sub: 'הזינו סיסמה חדשה לחשבון Ownest שלכם.',
+        rc_submit: 'עדכון סיסמה', pw_ph: 'סיסמה חדשה', pw2_ph: 'אימות סיסמה',
+        rd_title: 'הסיסמה עודכנה! 🎉', rd_sub: 'פתחו את Ownest והתחברו עם הסיסמה החדשה.',
+        open_app: 'פתחו את Ownest', open_app2: 'פתחו את Ownest',
+        hint: 'לא נפתח? ודאו ש-Ownest מותקנת, ופתחו אותה ידנית.',
+        err_title: 'הקישור פג או אינו תקין',
+        err_sub: 'קישור האימות פג תוקף או כבר נוצל. פתחו את Ownest ובקשו אימייל חדש.',
+        e_short: 'הסיסמה חייבת לפחות ' + MIN_PW + ' תווים',
+        e_match: 'הסיסמאות אינן תואמות', e_busy: 'מעדכן…', e_fail: 'העדכון נכשל. בקשו קישור איפוס חדש.',
+        lang: '🇺🇸 English', badge: '/assets/img/appstore-badge-he.svg'
+      },
+      en: {
+        ok_title: 'Your email is verified! 🎉',
+        ok_sub: 'Your account is ready. Head back to the Ownest app and sign in with your email and password.',
+        rc_title: 'Set a new password', rc_sub: 'Enter a new password for your Ownest account.',
+        rc_submit: 'Update password', pw_ph: 'New password', pw2_ph: 'Confirm password',
+        rd_title: 'Password updated! 🎉', rd_sub: 'Open Ownest and sign in with your new password.',
+        open_app: 'Open Ownest', open_app2: 'Open Ownest',
+        hint: "Didn't open? Make sure Ownest is installed, then open it manually.",
+        err_title: 'This link has expired or is invalid',
+        err_sub: 'The verification link expired or was already used. Open Ownest and request a new email.',
+        e_short: 'Password must be at least ' + MIN_PW + ' characters',
+        e_match: 'Passwords do not match', e_busy: 'Updating…', e_fail: 'Update failed. Request a new reset link.',
+        lang: '🇮🇱 עברית', badge: '/assets/img/appstore-badge-en.svg'
+      }
+    };
+
+    // ── Parse the callback URL ──
+    var hash = new URLSearchParams((location.hash || '').replace(/^#/, ''));
+    var qp   = new URLSearchParams(location.search || '');
+    var accessToken = hash.get('access_token');
+    var type = hash.get('type') || qp.get('type') || '';
+    var errorDesc = hash.get('error_description') || qp.get('error_description') || hash.get('error') || qp.get('error');
+    // dev/prod is carried in the PATH: this same file is hosted at …/auth/confirm/
+    // (prod) AND …/auth/confirm/dev/ (dev copy). GoTrue treats query-bearing
+    // redirect URLs as second-class (?scheme= was unreliable), so the path is the
+    // carrier; ?scheme= is still honored as an explicit override when present.
+    var pathDefault = /\/dev\/?$/.test(location.pathname) ? 'ownest-dev' : 'ownest';
+    var scheme = (qp.get('scheme') || pathDefault).replace(/[^a-z0-9-]/gi, '') || pathDefault;
+
+    // Point every "Open Ownest" button at the right app (groupy:// or groupy-dev://).
+    Array.prototype.forEach.call(document.querySelectorAll('.openApp'), function (a) { a.href = scheme + '://'; });
+
+    function show(id) {
+      ['state-ok', 'state-recovery', 'state-recovery-done', 'state-err'].forEach(function (s) {
+        var el = document.getElementById(s); if (el) el.style.display = (s === id) ? '' : 'none';
+      });
+    }
+
+    // ── Decide which state to show ──
+    // error → expired/invalid. recovery+token → in-page password form.
+    // everything else (signup/email-change verify redirect, with or without tokens) → "verified, open app".
+    var initialState;
+    if (errorDesc) initialState = 'state-err';
+    else if (type === 'recovery' && accessToken) initialState = 'state-recovery';
+    else initialState = 'state-ok';
+    show(initialState);
+
+    // ── i18n ──
+    function apply(lang) {
+      var d = STR[lang];
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'he') ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n'); if (d[k]) el.textContent = d[k];
+      });
+      document.querySelectorAll('[data-ph]').forEach(function (el) {
+        var k = el.getAttribute('data-ph'); if (d[k]) el.setAttribute('placeholder', d[k]);
+      });
+      document.querySelectorAll('.appstore-badge img').forEach(function (img) { img.src = d.badge; });
+      document.getElementById('langBtn').textContent = d.lang;
+      try { localStorage.setItem('groupy-auth-lang', lang); } catch (e) {}
+    }
+    // Default HEBREW — never browser-language sniffing: in-app email browsers
+    // routinely report 'en' on Hebrew-locale phones, which shows English-only to
+    // Hebrew users. Only a SAVED explicit toggle choice overrides the default.
+    var saved = null; try { saved = localStorage.getItem('groupy-auth-lang'); } catch (e) {}
+    var initial = (saved === 'he' || saved === 'en') ? saved : 'he';
+    apply(initial);
+    document.getElementById('langBtn').addEventListener('click', function () {
+      apply(document.documentElement.lang === 'he' ? 'en' : 'he');
+    });
+
+    // ── In-page password reset (recovery) — completes via GoTrue REST, no app needed ──
+    if (initialState === 'state-recovery') {
+      var form = document.getElementById('pwForm');
+      var submit = document.getElementById('pwSubmit');
+      var errEl = document.getElementById('pwErr');
+      function L() { return STR[document.documentElement.lang] || STR.he; }
+      function setErr(m) { errEl.textContent = m || ''; }
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var pw = document.getElementById('pw').value, pw2 = document.getElementById('pw2').value;
+        setErr('');
+        if (pw.length < MIN_PW) return setErr(L().e_short);
+        if (pw !== pw2) return setErr(L().e_match);
+        submit.disabled = true; var label = submit.textContent; submit.textContent = L().e_busy;
+        fetch(AUTH_BASE + '/user', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + accessToken },
+          body: JSON.stringify({ password: pw })
+        }).then(function (res) {
+          if (!res.ok) return res.json().catch(function () { return {}; }).then(function (j) {
+            throw new Error(j.msg || j.error_description || j.message || 'Failed');
+          });
+          show('state-recovery-done');
+        }).catch(function (e) {
+          submit.disabled = false; submit.textContent = label;
+          setErr((e && e.message) ? e.message : L().e_fail);
+        });
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
