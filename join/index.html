@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Ownest — הצטרפות לקבוצה / Join a group</title>
+  <link rel="icon" href="/images/app-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0e1a; --bg-dark: #0f1729; --bg-card: #151d2e;
+      --bg-glass: rgba(255,255,255,0.04); --border-glass: rgba(255,255,255,0.08);
+      --blue: #3b82f6; --blue-bright: #60a5fa; --blue-glow: rgba(59,130,246,0.25);
+      --green: #22c55e; --danger: #f87171;
+      --text: #f0f4ff; --text-secondary: rgba(240,244,255,0.55); --text-muted: rgba(240,244,255,0.3);
+      --font-display: 'Rubik', sans-serif; --font-body: 'DM Sans', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body); background: var(--bg-deep); color: var(--text);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 24px; -webkit-font-smoothing: antialiased;
+      background-image:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.16), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 90%, rgba(34,197,94,0.08), transparent);
+      background-attachment: fixed;
+    }
+    .card {
+      width: 100%; max-width: 440px; background: var(--bg-card);
+      border: 1px solid var(--border-glass); border-radius: 24px;
+      padding: 40px 32px; text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    }
+    .logo { width: 64px; height: 64px; border-radius: 16px; margin: 0 auto 22px; display: block; box-shadow: 0 0 30px var(--blue-glow); }
+    .icon { font-size: 46px; line-height: 1; margin-bottom: 18px; }
+    h1 { font-family: var(--font-display); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; margin-bottom: 12px; }
+    p { color: var(--text-secondary); font-size: 15px; line-height: 1.65; margin-bottom: 8px; }
+    p.sub { font-size: 13px; color: var(--text-muted); }
+    .group-name { color: var(--blue-bright); font-weight: 700; }
+    .code-box {
+      display: flex; justify-content: center; gap: 8px; margin: 22px 0 8px;
+      direction: ltr;
+    }
+    .code-char {
+      background: var(--bg-glass); border: 1px solid var(--border-glass);
+      border-radius: 10px; min-width: 40px; padding: 12px 6px;
+      font-family: var(--font-display); font-weight: 800; font-size: 22px;
+      color: var(--blue-bright); letter-spacing: 0;
+    }
+    .copy-btn {
+      background: none; border: none; color: var(--text-muted); font-size: 13px;
+      cursor: pointer; font-family: var(--font-body); margin-bottom: 18px;
+    }
+    .copy-btn:hover { color: var(--blue-bright); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      width: 100%; background: var(--blue); color: #fff;
+      padding: 15px 24px; border-radius: 14px; text-decoration: none; border: none; cursor: pointer;
+      font-family: var(--font-display); font-weight: 700; font-size: 15px;
+      transition: transform .2s, opacity .2s; margin-top: 10px;
+    }
+    .btn.secondary { background: var(--bg-glass); border: 1px solid var(--border-glass); color: var(--text); }
+    .btn:hover { transform: translateY(-1px); }
+    .steps { text-align: start; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border-glass); }
+    .steps p { font-size: 13.5px; margin-bottom: 6px; }
+    .lang { display: flex; justify-content: center; gap: 8px; margin-top: 22px; }
+    .lang button {
+      background: var(--bg-glass); border: 1px solid var(--border-glass); color: var(--text-muted);
+      border-radius: 999px; padding: 6px 14px; font-size: 13px; cursor: pointer; font-family: var(--font-body);
+    }
+    .lang button.active { color: var(--text); border-color: var(--blue); }
+    #no-code { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="/images/app-icon.png" alt="Ownest">
+
+    <div id="has-code">
+      <div class="icon">🤝</div>
+      <h1 data-t="title">הוזמנת להצטרף לקבוצה</h1>
+      <p id="group-line">הוזמנת לנהל נכסים במשותף ב-Ownest</p>
+
+      <div class="code-box" id="code-box"></div>
+      <button class="copy-btn" id="copy-code" data-t="copy">העתקת הקוד 📋</button>
+
+      <a class="btn" id="open-app" href="#" data-t="openApp">פתיחה באפליקציה והצטרפות</a>
+      <a class="btn secondary" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" data-t="store">הורדת Ownest מה-App Store</a>
+
+      <div class="steps">
+        <p data-t="step1">1. התקינו את Ownest (אם עדיין לא מותקנת)</p>
+        <p data-t="step2">2. חזרו לדף הזה ולחצו "פתיחה באפליקציה" — או הזינו את הקוד במסך הקבוצות</p>
+        <p data-t="step3">3. אם אינכם מחוברים — התחברו, וההצטרפות תושלם אוטומטית</p>
+      </div>
+    </div>
+
+    <div id="no-code">
+      <div class="icon">🔗</div>
+      <h1 data-t="noCodeTitle">קישור הזמנה חסר</h1>
+      <p data-t="noCodeBody">הקישור אינו מכיל קוד הזמנה. בקשו ממנהל הקבוצה קישור חדש.</p>
+    </div>
+
+    <div class="lang">
+      <button id="lang-he" class="active" onclick="setLang('he')">🇮🇱 עברית</button>
+      <button id="lang-en" onclick="setLang('en')">🇺🇸 English</button>
+    </div>
+  </div>
+
+  <script>
+    // ── Bilingual strings (English default; Hebrew for Hebrew browsers; saved choice wins) ──
+    var STR = {
+      he: {
+        docTitle: 'Ownest — הצטרפות לקבוצה',
+        title: 'הוזמנת להצטרף לקבוצה',
+        groupPlain: 'הוזמנת לנהל נכסים במשותף ב-Ownest',
+        groupNamedPrefix: 'הוזמנת להצטרף לקבוצה ', groupNamedSuffix: ' ב-Ownest',
+        copy: 'העתקת הקוד 📋', copied: 'הקוד הועתק ✓',
+        openApp: 'פתיחה באפליקציה והצטרפות',
+        store: 'הורדת Ownest מה-App Store',
+        step1: '1. התקינו את Ownest (אם עדיין לא מותקנת)',
+        step2: '2. חזרו לדף הזה ולחצו "פתיחה באפליקציה" — או הזינו את הקוד במסך הקבוצות',
+        step3: '3. אם אינכם מחוברים — התחברו, וההצטרפות תושלם אוטומטית',
+        noCodeTitle: 'קישור הזמנה חסר',
+        noCodeBody: 'הקישור אינו מכיל קוד הזמנה. בקשו ממנהל הקבוצה קישור חדש.',
+      },
+      en: {
+        docTitle: 'Ownest — Join a group',
+        title: 'You are invited to a group',
+        groupPlain: 'You have been invited to manage properties together on Ownest',
+        groupNamedPrefix: 'You have been invited to join ', groupNamedSuffix: ' on Ownest',
+        copy: 'Copy code 📋', copied: 'Code copied ✓',
+        openApp: 'Open in the app and join',
+        store: 'Get Ownest on the App Store',
+        step1: '1. Install Ownest (if it is not installed yet)',
+        step2: '2. Come back to this page and tap "Open in the app" — or enter the code on the Groups screen',
+        step3: '3. If you are signed out — sign in, and joining completes automatically',
+        noCodeTitle: 'Invite link is missing its code',
+        noCodeBody: 'This invite link is missing its code. Ask the group admin for a fresh link.',
+      }
+    };
+    var lang = 'he';
+    var groupName = '';
+
+    function applyLang() {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+      document.title = STR[lang].docTitle;
+      document.querySelectorAll('[data-t]').forEach(function (el) {
+        var k = el.getAttribute('data-t');
+        if (STR[lang][k]) el.textContent = STR[lang][k];
+      });
+      renderGroupLine();
+      document.getElementById('lang-he').classList.toggle('active', lang === 'he');
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    }
+    function setLang(l) {
+      lang = l;
+      try { localStorage.setItem('ownest_lang', l); } catch (e) {}
+      applyLang();
+    }
+    function renderGroupLine() {
+      var el = document.getElementById('group-line');
+      if (!el) return;
+      if (groupName) {
+        el.textContent = '';
+        el.appendChild(document.createTextNode(STR[lang].groupNamedPrefix));
+        var span = document.createElement('span');
+        span.className = 'group-name';
+        span.textContent = groupName;
+        el.appendChild(span);
+        el.appendChild(document.createTextNode(STR[lang].groupNamedSuffix));
+      } else {
+        el.textContent = STR[lang].groupPlain;
+      }
+    }
+
+    (function () {
+      var query = new URLSearchParams(location.search || '');
+      var code = (query.get('code') || '').trim().toUpperCase();
+      groupName = (query.get('group') || '').trim();
+
+      // English default; Hebrew browsers get Hebrew; a saved choice wins over both.
+      var saved = null;
+      try { saved = localStorage.getItem('ownest_lang'); } catch (e) {}
+      if (saved === 'he' || saved === 'en') { lang = saved; }
+      else if ((navigator.language || '').slice(0, 2).toLowerCase() !== 'he') { lang = 'en'; }
+      applyLang();
+
+      if (!code) {
+        document.getElementById('has-code').style.display = 'none';
+        document.getElementById('no-code').style.display = 'block';
+        return;
+      }
+
+      var box = document.getElementById('code-box');
+      code.split('').forEach(function (ch) {
+        var el = document.createElement('div');
+        el.className = 'code-char';
+        el.textContent = ch;
+        box.appendChild(el);
+      });
+
+      // Open the SAME app the invite came from (dev builds pass ?app=dev),
+      // mirroring the /auth/confirm page mechanism.
+      var scheme = query.get('app') === 'dev' ? 'ownest-dev://' : 'ownest://';
+      document.getElementById('open-app').setAttribute('href', scheme + 'join/' + encodeURIComponent(code));
+
+      document.getElementById('copy-code').addEventListener('click', function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(code);
+          this.textContent = STR[lang].copied;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
