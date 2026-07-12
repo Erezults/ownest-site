@@ -6,9 +6,8 @@
   <title>Ownest — אימות אימייל / Email verified</title>
   <meta name="robots" content="noindex" />
   <meta name="theme-color" content="#0c0e1a" />
-  
-  
-  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+  <link rel="icon" href="/images/app-icon.png" />
+  <link rel="apple-touch-icon" href="/images/app-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -24,7 +23,9 @@
   </style>
 
   <style>
-    body { min-height: 100dvh; display: grid; place-items: center;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Heebo', 'Inter', system-ui, sans-serif;
+      min-height: 100dvh; display: grid; place-items: center;
       background: radial-gradient(120% 120% at 80% -10%, #1b1f4a 0%, var(--ink) 60%); color: var(--text-on-dark); }
     .auth-card { max-width: 480px; margin-inline: auto; text-align: center; padding: 40px 26px 48px; }
     .auth-card .mark { height: 52px; width: auto; margin: 0 auto 30px; filter: drop-shadow(0 8px 30px rgba(0,0,0,.4)); }
@@ -38,8 +39,15 @@
     .auth-card h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); margin-bottom: 12px; color: #fff; }
     .auth-card p { color: var(--text-on-dark-muted); font-size: 1.08rem; margin-bottom: 30px; }
     .auth-actions { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px;
+      border-radius: 14px; border: none; cursor: pointer; text-decoration: none;
+      font-family: inherit; font-weight: 700; font-size: 1.05rem; }
+    .btn-primary { background: var(--brand-green); color: #fff; }
     .auth-actions .btn { min-width: 240px; }
-    .appstore-badge svg, .appstore-badge img { height: 50px; }
+    .appstore-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 240px;
+      padding: 12px 24px; border-radius: 14px; border: 1px solid var(--border-dark);
+      background: rgba(255,255,255,.06); color: #fff; text-decoration: none;
+      font-weight: 600; font-size: .95rem; }
     .lang-switch { position: fixed; top: 16px; inset-inline-end: 16px; }
     .lang-switch button { background: rgba(255,255,255,.1); border: 1px solid var(--border-dark); color: #fff;
       border-radius: 999px; padding: 7px 14px; font-weight: 700; font-size: .85rem; }
@@ -67,9 +75,7 @@
       <p data-i18n="ok_sub">החשבון שלך מוכן. חזרו לאפליקציית Ownest והתחברו עם האימייל והסיסמה שלכם.</p>
       <div class="auth-actions">
         <a class="btn btn-primary openApp" href="ownest://" data-i18n="open_app">פתחו את Ownest</a>
-        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
-          <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
-        </a>
+        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" data-i18n="store">הורדת Ownest מה-App Store</a>
         <p class="hint" data-i18n="hint">לא נפתח? ודאו ש-Ownest מותקנת, ופתחו אותה ידנית.</p>
       </div>
     </div>
@@ -94,9 +100,7 @@
       <p data-i18n="rd_sub">פתחו את Ownest והתחברו עם הסיסמה החדשה.</p>
       <div class="auth-actions">
         <a class="btn btn-primary openApp" href="ownest://" data-i18n="open_app">פתחו את Ownest</a>
-        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
-          <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
-        </a>
+        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" data-i18n="store">הורדת Ownest מה-App Store</a>
       </div>
     </div>
 
@@ -107,9 +111,7 @@
       <p data-i18n="err_sub">קישור האימות פג תוקף או כבר נוצל. פתחו את Ownest ובקשו אימייל חדש.</p>
       <div class="auth-actions">
         <a class="btn btn-primary openApp" href="ownest://" data-i18n="open_app2">פתחו את Ownest</a>
-        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
-          <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
-        </a>
+        <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" data-i18n="store">הורדת Ownest מה-App Store</a>
       </div>
     </div>
   </main>
@@ -137,7 +139,7 @@
         err_sub: 'קישור האימות פג תוקף או כבר נוצל. פתחו את Ownest ובקשו אימייל חדש.',
         e_short: 'הסיסמה חייבת לפחות ' + MIN_PW + ' תווים',
         e_match: 'הסיסמאות אינן תואמות', e_busy: 'מעדכן…', e_fail: 'העדכון נכשל. בקשו קישור איפוס חדש.',
-        lang: '🇺🇸 English', badge: '/assets/img/appstore-badge-he.svg'
+        lang: '🇺🇸 English', store: 'הורדת Ownest מה-App Store'
       },
       en: {
         ok_title: 'Your email is verified! 🎉',
@@ -151,7 +153,7 @@
         err_sub: 'The verification link expired or was already used. Open Ownest and request a new email.',
         e_short: 'Password must be at least ' + MIN_PW + ' characters',
         e_match: 'Passwords do not match', e_busy: 'Updating…', e_fail: 'Update failed. Request a new reset link.',
-        lang: '🇮🇱 עברית', badge: '/assets/img/appstore-badge-en.svg'
+        lang: '🇮🇱 עברית', store: 'Get Ownest on the App Store'
       }
     };
 
@@ -197,7 +199,6 @@
       document.querySelectorAll('[data-ph]').forEach(function (el) {
         var k = el.getAttribute('data-ph'); if (d[k]) el.setAttribute('placeholder', d[k]);
       });
-      document.querySelectorAll('.appstore-badge img').forEach(function (img) { img.src = d.badge; });
       document.getElementById('langBtn').textContent = d.lang;
       try { localStorage.setItem('ownest-auth-lang', lang); } catch (e) {}
     }
