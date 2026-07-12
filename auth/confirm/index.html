@@ -58,7 +58,7 @@
 <body>
   <div class="lang-switch"><button id="langBtn" type="button">English</button></div>
   <main class="auth-card">
-    <img class="mark" src="/assets/img/groupy-wordmark.png" alt="Ownest" />
+    <img class="mark" src="/images/app-icon.png" alt="Ownest" />
 
     <!-- ✅ Email verified (signup / email-change / classic verify redirect) -->
     <div id="state-ok" style="display:none">
@@ -66,7 +66,7 @@
       <h1 data-i18n="ok_title">האימייל שלך אומת! 🎉</h1>
       <p data-i18n="ok_sub">החשבון שלך מוכן. חזרו לאפליקציית Ownest והתחברו עם האימייל והסיסמה שלכם.</p>
       <div class="auth-actions">
-        <a class="btn btn-primary openApp" href="groupy://" data-i18n="open_app">פתחו את Ownest</a>
+        <a class="btn btn-primary openApp" href="ownest://" data-i18n="open_app">פתחו את Ownest</a>
         <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
           <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
         </a>
@@ -93,7 +93,7 @@
       <h1 data-i18n="rd_title">הסיסמה עודכנה! 🎉</h1>
       <p data-i18n="rd_sub">פתחו את Ownest והתחברו עם הסיסמה החדשה.</p>
       <div class="auth-actions">
-        <a class="btn btn-primary openApp" href="groupy://" data-i18n="open_app">פתחו את Ownest</a>
+        <a class="btn btn-primary openApp" href="ownest://" data-i18n="open_app">פתחו את Ownest</a>
         <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
           <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
         </a>
@@ -106,7 +106,7 @@
       <h1 data-i18n="err_title">הקישור פג או אינו תקין</h1>
       <p data-i18n="err_sub">קישור האימות פג תוקף או כבר נוצל. פתחו את Ownest ובקשו אימייל חדש.</p>
       <div class="auth-actions">
-        <a class="btn btn-primary openApp" href="groupy://" data-i18n="open_app2">פתחו את Ownest</a>
+        <a class="btn btn-primary openApp" href="ownest://" data-i18n="open_app2">פתחו את Ownest</a>
         <a class="appstore-badge" href="https://apps.apple.com/app/id6782680064" target="_blank" rel="noopener" aria-label="App Store">
           <img src="/assets/img/appstore-badge-he.svg" alt="App Store" width="180" height="54" />
         </a>
@@ -168,7 +168,7 @@
     var pathDefault = /\/dev\/?$/.test(location.pathname) ? 'ownest-dev' : 'ownest';
     var scheme = (qp.get('scheme') || pathDefault).replace(/[^a-z0-9-]/gi, '') || pathDefault;
 
-    // Point every "Open Ownest" button at the right app (groupy:// or groupy-dev://).
+    // Point every "Open Ownest" button at the right app (ownest:// or ownest-dev://).
     Array.prototype.forEach.call(document.querySelectorAll('.openApp'), function (a) { a.href = scheme + '://'; });
 
     function show(id) {
@@ -199,12 +199,12 @@
       });
       document.querySelectorAll('.appstore-badge img').forEach(function (img) { img.src = d.badge; });
       document.getElementById('langBtn').textContent = d.lang;
-      try { localStorage.setItem('groupy-auth-lang', lang); } catch (e) {}
+      try { localStorage.setItem('ownest-auth-lang', lang); } catch (e) {}
     }
     // Default HEBREW — never browser-language sniffing: in-app email browsers
     // routinely report 'en' on Hebrew-locale phones, which shows English-only to
     // Hebrew users. Only a SAVED explicit toggle choice overrides the default.
-    var saved = null; try { saved = localStorage.getItem('groupy-auth-lang'); } catch (e) {}
+    var saved = null; try { saved = localStorage.getItem('ownest-auth-lang'); } catch (e) {}
     var initial = (saved === 'he' || saved === 'en') ? saved : 'he';
     apply(initial);
     document.getElementById('langBtn').addEventListener('click', function () {
