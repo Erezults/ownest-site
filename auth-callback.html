@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="/accessibility-widget.js" defer></script>
   <style>
     /* ─── Brand tokens — kept in sync with web/index.html :root ─────────────── */
     :root {
@@ -26,7 +27,7 @@
       --green-glow: rgba(34,197,94,0.18);
       --text: #f0f4ff;
       --text-secondary: rgba(240,244,255,0.55);
-      --text-muted: rgba(240,244,255,0.3);
+      --text-muted: rgba(240,244,255,0.5);
       --font-display: 'Rubik', sans-serif;
       --font-body: 'DM Sans', sans-serif;
     }
@@ -38,6 +39,7 @@
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
       padding: 24px; -webkit-font-smoothing: antialiased; overflow-x: hidden;
     }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-bright); outline-offset: 2px; }
 
     /* Soft radial glow background — same palette/treatment as index.html hero */
     .bg {

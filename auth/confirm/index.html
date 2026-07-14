@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="/accessibility-widget.js" defer></script>
   <style>
     :root {
       --brand-green: #3B82F6;
@@ -55,12 +56,13 @@
     /* Recovery (set-new-password) form */
     .pw-form { display: flex; flex-direction: column; gap: 14px; max-width: 340px; margin: 0 auto; }
     .pw-form input { width: 100%; padding: 14px 16px; font-size: 1.05rem; border-radius: 14px;
-      border: 1px solid var(--border-dark); background: rgba(255,255,255,.06); color: #fff; outline: none;
+      border: 1px solid var(--border-dark); background: rgba(255,255,255,.06); color: #fff;
       font-family: inherit; }
-    .pw-form input:focus { border-color: #a78bfa; background: rgba(255,255,255,.1); }
+    .pw-form input:focus-visible { border-color: #a78bfa; background: rgba(255,255,255,.1); outline: 3px solid #a78bfa; outline-offset: 2px; }
     .pw-form input::placeholder { color: rgba(255,255,255,.45); }
     .pw-err { color: var(--brand-pink); font-size: .92rem; min-height: 1.1em; margin: 0; }
     .btn[disabled] { opacity: .6; pointer-events: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #a78bfa; outline-offset: 2px; }
   </style>
 </head>
 <body>
