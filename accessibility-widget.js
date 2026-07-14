@@ -33,11 +33,20 @@
   };
 
   function loadPrefs() {
+    var p = { zoomIndex: 0, contrast: false, noMotion: false };
     try {
       var raw = localStorage.getItem(STORE_KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) {
+        var saved = JSON.parse(raw);
+        if (saved && typeof saved === 'object') {
+          var zi = saved.zoomIndex;
+          if (typeof zi === 'number' && zi >= 0 && zi < ZOOM_STEPS.length) p.zoomIndex = zi | 0;
+          p.contrast = !!saved.contrast;
+          p.noMotion = !!saved.noMotion;
+        }
+      }
     } catch (e) {}
-    return { zoomIndex: 0, contrast: false, noMotion: false };
+    return p;
   }
   function savePrefs(p) {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(p)); } catch (e) {}
@@ -136,7 +145,7 @@
     });
 
     document.addEventListener('click', function (ev) {
-      if (!panel.hidden && !panel.contains(ev.target) && ev.target !== btn) closePanel(false);
+      if (!panel.hidden && !panel.contains(ev.target) && !btn.contains(ev.target)) closePanel(false);
     });
 
     panel.addEventListener('click', function (ev) {
